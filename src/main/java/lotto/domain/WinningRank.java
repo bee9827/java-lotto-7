@@ -23,9 +23,9 @@ public enum WinningRank {
     }
 
     public static WinningRank getRank(int matchCount, boolean isBonusBallMatch) {
-        for(WinningRank winningRank : WinningRank.values()) {
-            if(winningRank == WinningRank.SECOND && !isBonusBallMatch) continue;
-            if(Objects.equals(winningRank.getMatchCount(), matchCount)){
+        for (WinningRank winningRank : WinningRank.values()) {
+            if (winningRank == WinningRank.SECOND && !isBonusBallMatch) continue;
+            if (Objects.equals(winningRank.getMatchCount(), matchCount)) {
                 return winningRank;
             }
         }
@@ -46,5 +46,11 @@ public enum WinningRank {
 
     public Integer getPrice() {
         return price;
+    }
+
+    public String getCondition() {
+        String condition = getMatchCount() + "개 일치";
+        if (this == WinningRank.SECOND) condition += ", 보너스 볼 일치";
+        return condition;
     }
 }
