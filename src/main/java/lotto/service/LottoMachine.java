@@ -1,6 +1,9 @@
-package lotto;
+package lotto.service;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import lotto.domain.Lotto;
+import lotto.domain.WinningLotto;
+import lotto.domain.WinningRank;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -46,7 +49,7 @@ public class LottoMachine {
 
     private Integer getRankCount(Predicate predicate) {
         return (int) lottos.stream()
-                .map(lotto -> WinningRank.getRank(winningLotto.matchCount(lotto), winningLotto.isMatchBonusBall(lotto)))
+                .map(lotto -> WinningRank.getRank(winningLotto.getMatchCount(lotto), winningLotto.isMatchBonusBall(lotto)))
                 .filter(predicate::equals)
                 .count();
     }
