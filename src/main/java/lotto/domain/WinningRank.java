@@ -7,8 +7,7 @@ public enum WinningRank {
     SECOND("2등", 5, Boolean.TRUE, 30_000_000),
     THIRD("3등", 5, Boolean.FALSE, 1_500_000),
     FOURTH("4등", 4, Boolean.FALSE, 50_000),
-    FIFTH("5등", 3, Boolean.FALSE, 5_000),
-    NONE("미당첨", 0, Boolean.FALSE, 0);
+    FIFTH("5등", 3, Boolean.FALSE, 5_000);
 
     private final String name;
     private final Integer matchCount;
@@ -29,7 +28,7 @@ public enum WinningRank {
                 return winningRank;
             }
         }
-        return NONE;
+        return null;
     }
 
     public String getName() {

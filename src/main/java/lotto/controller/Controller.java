@@ -21,25 +21,29 @@ public class Controller {
 
 
     public void run(){
-        outputView.printInstruction("구입금액을 입력해 주세요.");
-        Integer money = inputView.askPrice();
-        outputView.printLineSeparator();
+        try {
+            outputView.printInstruction("구입금액을 입력해 주세요.");
+            Integer money = inputView.askPrice();
+            outputView.printLineSeparator();
 
-        lottoMachine.buyLotto(money);
-        outputView.printList(lottoMachine.lottosToString());
-        outputView.printLineSeparator();
+            lottoMachine.buyLotto(money);
+            outputView.printList(lottoMachine.lottosToString());
+            outputView.printLineSeparator();
 
-        outputView.printInstruction("당첨 번호를 입력해 주세요.");
-        List<Integer> winningNumbers = (inputView.askWinningNumbers());
+            outputView.printInstruction("당첨 번호를 입력해 주세요.");
+            List<Integer> winningNumbers = (inputView.askWinningNumbers());
 
-        outputView.printInstruction("보너스 번호를 입력해 주세요.");
-        Integer bonusNumber = inputView.askBonusNumber();
+            outputView.printInstruction("보너스 번호를 입력해 주세요.");
+            Integer bonusNumber = inputView.askBonusNumber();
 
-        WinningLotto winningLotto = new WinningLotto(winningNumbers, bonusNumber);
-        lottoMachine.setWinningLotto(winningLotto);
+            WinningLotto winningLotto = new WinningLotto(winningNumbers, bonusNumber);
+            lottoMachine.setWinningLotto(winningLotto);
 
-        outputView.printStatus(lottoMachine.getRankWithCount());
-        outputView.printTotalProfit((long)money,lottoMachine.getTotalPrize());
+            outputView.printStatus(lottoMachine.getRankWithCount());
+            outputView.printTotalProfit(lottoMachine.getProfitRate());
+        }catch (IllegalArgumentException e){
+            outputView.printError(e.getMessage());
+        }
     }
 
 }

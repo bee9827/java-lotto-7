@@ -6,7 +6,6 @@ import lotto.domain.WinningLotto;
 import lotto.domain.WinningRank;
 
 import java.util.*;
-import java.util.function.Predicate;
 
 public class LottoMachine {
     private List<Lotto> lottos;
@@ -46,14 +45,18 @@ public class LottoMachine {
         this.winningLotto = winningLotto;
     }
 
-    public EnumMap<WinningRank, Integer> getRankWithCount() {
+    public Map<WinningRank, Integer> getRankWithCount() {
         validateWinningLotto();
         EnumMap<WinningRank, Integer> rankWithCount = new EnumMap<>(WinningRank.class);
 
         for (WinningRank rank : WinningRank.values()) {
-            rankWithCount.put(rank, getRankCount(r -> r.equals(rank)));
+            rankWithCount.put(rank, getRankCount(rank));
         }
         return rankWithCount;
+    }
+
+    public float getProfitRate(){
+        return Math.round((float) getTotalPrize() / (Lotto.LOTTO_PRICE * lottos.size()) * 1000)/10.0f;
     }
 
     private void validateMoney(int money) {
@@ -65,10 +68,10 @@ public class LottoMachine {
         if (winningLotto == null) throw new IllegalStateException("우승 로또가 없습니다.");
     }
 
-    private Integer getRankCount(Predicate predicate) {
+    private Integer getRankCount(WinningRank rank) {
         return (int) lottos.stream()
                 .map(lotto -> WinningRank.getRank(winningLotto.getMatchCount(lotto), winningLotto.isMatchBonusBall(lotto)))
-                .filter(predicate::equals)
+                .filter(rank::equals)
                 .count();
     }
 

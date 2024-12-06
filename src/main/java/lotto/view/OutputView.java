@@ -19,19 +19,19 @@ public class OutputView {
         list.forEach(System.out::println);
     }
 
-    public void printLineSeparator(){
+    public void printLineSeparator() {
         System.out.println();
     }
 
-    public void printStatus(EnumMap<WinningRank, Integer> status) {
+    public void printStatus(Map<WinningRank, Integer> status) {
         printInstruction("당첨 통계");
         printInstruction("---");
         status.forEach((k, v) ->
                 System.out.printf("%s (%,d원) - %,d개%n", k.getCondition(), k.getPrice(), v));
     }
 
-    public void printTotalProfit(Long price, Long prize){
-        System.out.printf("총 수익률은 %,d.1%%입니다.%n", Math.round((float) prize /price*100));
+    public void printTotalProfit(Float profitRate) {
+        System.out.printf("총 수익률은 %,.1f%%입니다.%n", profitRate);
     }
 
     public void printError(String error) {
