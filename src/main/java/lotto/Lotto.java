@@ -1,5 +1,6 @@
 package lotto;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Lotto {
@@ -13,6 +14,16 @@ public class Lotto {
         validateRange(numbers);
         validateDuplicate(numbers);
         this.numbers = numbers;
+    }
+
+    protected Integer matchCount(Lotto lotto){
+        return (int) numbers.stream()
+                .filter(lotto::isMatch)
+                .count();
+    }
+
+    protected boolean isMatch(Integer number) {
+        return numbers.contains(number);
     }
 
     private void validateSize(List<Integer> numbers) {
