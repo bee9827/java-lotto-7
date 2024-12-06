@@ -19,6 +19,10 @@ public class OutputView {
         list.forEach(System.out::println);
     }
 
+    public void printLineSeparator(){
+        System.out.println();
+    }
+
     public void printStatus(EnumMap<WinningRank, Integer> status) {
         printInstruction("당첨 통계");
         printInstruction("---");
@@ -26,7 +30,7 @@ public class OutputView {
                 System.out.printf("%s (%,d원) - %,d개%n", k.getCondition(), k.getPrice(), v));
     }
 
-    public void printTotalProfit(Integer price, Integer prize){
+    public void printTotalProfit(Long price, Long prize){
         System.out.printf("총 수익률은 %,d.1%%입니다.%n", Math.round((float) prize /price*100));
     }
 

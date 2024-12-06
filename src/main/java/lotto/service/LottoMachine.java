@@ -12,7 +12,20 @@ public class LottoMachine {
     private List<Lotto> lottos;
     private WinningLotto winningLotto;
 
+    public List<String> lottosToString(){
+        return lottos.stream().map(Lotto::toString).toList();
+    }
+
+    public Long getTotalPrize(){
+        return getRankWithCount().entrySet()
+                .stream()
+                .map(e -> (long)e.getKey().getPrice() * e.getValue())
+                .reduce(Long::sum)
+                .orElse(0L);
+    }
+
     public List<Lotto> buyLotto(int money) {
+        validateMoney(money);
         return getLottos(money / Lotto.LOTTO_PRICE);
     }
 
@@ -33,7 +46,7 @@ public class LottoMachine {
         this.winningLotto = winningLotto;
     }
 
-    public Map<WinningRank, Integer> getRankWithCount() {
+    public EnumMap<WinningRank, Integer> getRankWithCount() {
         validateWinningLotto();
         EnumMap<WinningRank, Integer> rankWithCount = new EnumMap<>(WinningRank.class);
 
@@ -41,6 +54,11 @@ public class LottoMachine {
             rankWithCount.put(rank, getRankCount(r -> r.equals(rank)));
         }
         return rankWithCount;
+    }
+
+    private void validateMoney(int money) {
+        if (money % Lotto.LOTTO_PRICE != 0)
+            throw new IllegalArgumentException(String.format("돈 단위는 %,d원 단위로 입력해 주세요.", Lotto.LOTTO_PRICE));
     }
 
     private void validateWinningLotto() {

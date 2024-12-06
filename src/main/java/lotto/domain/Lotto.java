@@ -22,6 +22,10 @@ public class Lotto {
         return Collections.unmodifiableList(numbers);
     }
 
+    public String toString(){
+        return numbers.toString();
+    }
+
     protected Integer matchCount(Lotto lotto){
         return (int) numbers.stream()
                 .filter(lotto::isMatch)
